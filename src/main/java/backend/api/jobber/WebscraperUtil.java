@@ -15,7 +15,7 @@ public class WebscraperUtil {
 
     public WebscraperUtil() {}
 
-    public List<JobDetail> scrape(String keywordSearch, String locationSearch, String experienceSearch, int pageNo){
+    public List<JobDetail> scrape(String keywordSearch, String locationSearch, String experienceSearch){
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
 
@@ -23,12 +23,11 @@ public class WebscraperUtil {
 
         try{
             String searchUrl = MAIN_URL
-                    + "searchType=personalizedSearch&from=submit&searchBy=0&rdoOperator=OR&luceneResultSize=25&postWeek=60"
+                    + "searchType=personalizedSearch&from=submit"
                     + "&txtKeywords=" + URLEncoder.encode(keywordSearch, "UTF-8")
                     + "&txtLocation=" + URLEncoder.encode(locationSearch, "UTF-8")
                     + "&cboWorkExp1=" + URLEncoder.encode(experienceSearch, "UTF-8")
-                    + "&sequence=" + URLEncoder.encode(pageNo + "", "UTF-8")
-                    + "&startPage=1";
+                    + "&sequence=1&startPage=1";
 
             HtmlPage page = client.getPage(searchUrl);
             List<HtmlElement> elements = (List<HtmlElement>) page.getByXPath("//li[@class='clearfix job-bx wht-shd-bx']");
@@ -72,4 +71,5 @@ public class WebscraperUtil {
 
         return jobDetails;
     }
+
 }
